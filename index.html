@@ -1,0 +1,1798 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobRinger - Find Your Dream Job Today</title>
+    <meta name="description" content="Connect with top employers and discover opportunities that match your skills and ambitions. Your next career move starts here.">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1e293b;
+            background-color: #ffffff;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header Styles */
+        .header {
+            background: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border-bottom: 1px solid #e2e8f0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 50;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 4rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(to right, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav {
+            display: none;
+            gap: 2rem;
+        }
+
+        .nav a {
+            color: #475569;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav a:hover {
+            color: #2563eb;
+        }
+
+        .header-buttons {
+            display: none;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .btn-secondary {
+            color: #475569;
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .btn-secondary:hover {
+            color: #2563eb;
+        }
+
+        /* Bell button styling - remove border and background */
+        .bell-btn {
+            background: none;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .bell-btn:hover {
+            color: #475569;
+        }
+
+        .btn-primary {
+            background: linear-gradient(to right, #2563eb, #7c3aed);
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(to right, #1d4ed8, #6d28d9);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .mobile-menu-btn {
+            display: block;
+            background: none;
+            border: none;
+            color: #64748b;
+            cursor: pointer;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            display: none;
+            padding: 1rem 0;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .mobile-menu.active {
+            display: block;
+        }
+
+        .mobile-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .mobile-nav a {
+            color: #475569;
+            text-decoration: none;
+            padding: 0.5rem 0.75rem;
+            font-weight: 500;
+        }
+
+        .mobile-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #dbeafe 100%);
+            padding: 8rem 0 5rem;
+            margin-top: 0.3rem;
+        }
+
+        .hero-content {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero-gradient-text {
+            background: linear-gradient(to right, #2563eb, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #64748b;
+            max-width: 48rem;
+            margin: 0 auto 2rem;
+        }
+
+        /* Search Bar - Updated styling */
+        .search-container {
+            max-width: 64rem;
+            margin: 0 auto;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            padding: 0.5rem;
+            overflow: hidden;
+        }
+
+        .search-form {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .search-group {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem;
+            position: relative;
+            flex: 1;
+        }
+
+        .search-group svg {
+            color: #94a3b8;
+            width: 1.25rem;
+            height: 1.25rem;
+        }
+
+        .search-input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 1rem;
+            color: #1e293b;
+        }
+
+        .search-input::placeholder {
+            color: #64748b;
+        }
+
+        .search-separator {
+            border-left: 1px solid #e2e8f0;
+        }
+
+        .search-btn {
+            background: linear-gradient(to right, #2563eb, #7c3aed);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 0.5rem;
+            white-space: nowrap;
+        }
+
+        .search-btn:hover {
+            background: linear-gradient(to right, #1d4ed8, #6d28d9);
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Quick Filters */
+        .quick-filters {
+            margin-top: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .filter-label {
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .filter-tag {
+            background: white;
+            color: #475569;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            border: 1px solid #e2e8f0;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: all 0.2s;
+        }
+
+        .filter-tag:hover {
+            border-color: #3b82f6;
+            color: #2563eb;
+        }
+
+        /* Stats Section */
+        .stats {
+            padding: 4rem 0;
+            background: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-icon {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: white;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-icon.blue {
+            background: linear-gradient(to right, #3b82f6, #2563eb);
+        }
+
+        .stat-icon.purple {
+            background: linear-gradient(to right, #8b5cf6, #7c3aed);
+        }
+
+        .stat-icon.emerald {
+            background: linear-gradient(to right, #10b981, #059669);
+        }
+
+        .stat-icon.orange {
+            background: linear-gradient(to right, #f59e0b, #d97706);
+        }
+
+        .stat-value {
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        /* Featured Jobs Section */
+        .featured-jobs {
+            padding: 5rem 0;
+            background: #f8fafc;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title {
+            font-size: clamp(1.875rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 1rem;
+        }
+
+        .section-description {
+            font-size: 1.25rem;
+            color: #64748b;
+            max-width: 32rem;
+            margin: 0 auto;
+        }
+
+        .jobs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .job-card {
+            background: white;
+            border-radius: 0.75rem;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            padding: 1.5rem;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .job-card:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .job-info {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .job-logo {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.5rem;
+            object-fit: cover;
+        }
+
+        .job-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 0.25rem;
+        }
+
+        .job-company {
+            color: #64748b;
+            font-weight: 500;
+        }
+
+        .bookmark-btn {
+            background: none;
+            border: none;
+            color: #94a3b8;
+            cursor: pointer;
+            padding: 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .bookmark-btn:hover {
+            color: #2563eb;
+        }
+
+        .job-details {
+            margin-bottom: 1rem;
+        }
+
+        .job-detail {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #64748b;
+            font-size: 0.875rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .job-detail svg {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .job-detail.salary {
+            color: #059669;
+            font-weight: 500;
+        }
+
+        .job-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .job-tag {
+            background: #dbeafe;
+            color: #1d4ed8;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .apply-btn {
+            width: 100%;
+            background: linear-gradient(to right, #2563eb, #7c3aed);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .apply-btn:hover {
+            background: linear-gradient(to right, #1d4ed8, #6d28d9);
+        }
+
+        .view-all-btn {
+            background: white;
+            color: #475569;
+            border: 1px solid #d1d5db;
+            padding: 0.75rem 2rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+
+        .view-all-btn:hover {
+            border-color: #3b82f6;
+            color: #2563eb;
+        }
+
+        .section-footer {
+            text-align: center;
+        }
+
+        /* Job Categories Section */
+        .job-categories {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .category-card {
+            background: white;
+            border-radius: 0.75rem;
+            border: 1px solid #e2e8f0;
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.2s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-card:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            transform: translateY(-4px);
+        }
+
+        .category-icon {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            color: white;
+            transition: transform 0.2s;
+        }
+
+        .category-card:hover .category-icon {
+            transform: scale(1.1);
+        }
+
+        .category-title {
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 0.5rem;
+            transition: color 0.2s;
+        }
+
+        .category-card:hover .category-title {
+            color: #2563eb;
+        }
+
+        .category-count {
+            color: #64748b;
+            font-size: 0.875rem;
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, #f8fafc 0%, #ffffff 50%, #dbeafe 100%);
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .step-card {
+            background: white;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 1px solid #e2e8f0;
+            transition: box-shadow 0.2s;
+            position: relative;
+        }
+
+        .step-card:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-icon-container {
+            position: relative;
+            margin-bottom: 1.5rem;
+        }
+
+        .step-icon {
+            width: 4rem;
+            height: 4rem;
+            border-radius: 1rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -0.5rem;
+            right: -0.5rem;
+            width: 2rem;
+            height: 2rem;
+            background: white;
+            border-radius: 50%;
+            border: 2px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.875rem;
+            font-weight: 700;
+            color: #475569;
+        }
+
+        .step-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin-bottom: 0.75rem;
+        }
+
+        .step-description {
+            color: #64748b;
+            line-height: 1.6;
+        }
+
+        .cta-section {
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .cta-btn {
+            background: linear-gradient(to right, #2563eb, #7c3aed);
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-block;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-btn:hover {
+            background: linear-gradient(to right, #1d4ed8, #6d28d9);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: #f8fafc;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .quote-icon {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            color: #dbeafe;
+            width: 2rem;
+            height: 2rem;
+        }
+
+        .rating {
+            display: flex;
+            gap: 0.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .star {
+            color: #fbbf24;
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .testimonial-content {
+            color: #475569;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 3rem;
+            height: 3rem;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .author-name {
+            font-weight: 600;
+            color: #0f172a;
+        }
+
+        .author-role {
+            font-size: 0.875rem;
+            color: #64748b;
+        }
+
+        /* Footer */
+        .footer {
+            background: #0f172a;
+            color: white;
+            padding: 4rem 0;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-section .logo {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(to right, #60a5fa, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-description {
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            color: #94a3b8;
+            transition: color 0.2s;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            color: #60a5fa;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            margin-bottom: 1rem;
+        }
+
+        .contact-item svg {
+            color: #94a3b8;
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-top: 0.125rem;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #334155;
+            padding-top: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .footer-bottom-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-bottom-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.2s;
+        }
+
+        .footer-bottom-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            color: #94a3b8;
+            font-size: 0.875rem;
+        }
+
+        /* Responsive Design */
+        @media (min-width: 768px) {
+            .container {
+                padding: 0 1.5rem;
+            }
+
+            .nav {
+                display: flex;
+            }
+
+            .header-buttons {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: none;
+            }
+
+            .search-form {
+                flex-direction: row;
+                align-items: stretch;
+            }
+
+            .search-btn {
+                margin: 0;
+                border-radius: 0.75rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+
+            .footer-bottom {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .container {
+                padding: 0 2rem;
+            }
+
+            .steps-grid {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        /* Utility Classes */
+        .text-center {
+            text-align: center;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .blue    { background: linear-gradient(to right, #3b82f6, #2563eb); }
+        .purple  { background: linear-gradient(to right, #8b5cf6, #7c3aed); }
+        .emerald { background: linear-gradient(to right, #10b981, #059669); }
+        .orange  { background: linear-gradient(to right, #f97316, #ea580c); }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">JobRinger</div>
+                
+                <nav class="nav">
+                    <a href="#jobs">Find Jobs</a>
+                    <a href="#companies">Companies</a>
+                    <a href="#post-job">Post a Job</a>
+                    <a href="#resources">Resources</a>
+                </nav>
+                
+                <div class="header-buttons">
+                    <button class="bell-btn">
+                        <i data-lucide="bell"></i>
+                    </button>
+                    <a href="#signin" class="btn-secondary">Sign In</a>
+                    <a href="#signup" class="btn-primary">Sign Up</a>
+                </div>
+                
+                <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                    <i data-lucide="menu" id="menu-icon"></i>
+                    <i data-lucide="x" id="close-icon" class="hidden"></i>
+                </button>
+            </div>
+            
+            <div class="mobile-menu" id="mobile-menu">
+                <nav class="mobile-nav">
+                    <a href="#jobs">Find Jobs</a>
+                    <a href="#companies">Companies</a>
+                    <a href="#post-job">Post a Job</a>
+                    <a href="#resources">Resources</a>
+                </nav>
+                <div class="mobile-buttons">
+                    <a href="#signin" class="btn-secondary">Sign In</a>
+                    <a href="#signup" class="btn-primary">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>
+                    Find Your Dream Job
+                    <span class="hero-gradient-text">Today</span>
+                </h1>
+                <p>
+                    Connect with top employers and discover opportunities that match your skills and ambitions. 
+                    Your next career move starts here.
+                </p>
+                
+                <div class="search-container">
+                    <form class="search-form">
+                        <div class="search-group">
+                            <i data-lucide="search"></i>
+                            <input 
+                                type="text" 
+                                placeholder="Job title, keywords, or company"
+                                class="search-input"
+                            >
+                        </div>
+                        
+                        <div class="search-group search-separator">
+                            <i data-lucide="map-pin"></i>
+                            <input 
+                                type="text" 
+                                placeholder="City, state, or remote"
+                                class="search-input"
+                            >
+                        </div>
+                        
+                        <button type="submit" class="search-btn">
+                            <i data-lucide="search"></i>
+                            Search Jobs
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="quick-filters">
+                    <span class="filter-label">Popular searches:</span>
+                    <a href="#" class="filter-tag">Remote Work</a>
+                    <a href="#" class="filter-tag">Data Scientist</a>
+                    <a href="#" class="filter-tag">Software Engineer</a>
+                    <a href="#" class="filter-tag">Product Manager</a>
+                    <a href="#" class="filter-tag">UX Designer</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-icon blue">
+                        <i data-lucide="users"></i>
+                    </div>
+                    <div class="stat-value">2M+</div>
+                    <div class="stat-label">Active Job Seekers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon purple">
+                        <i data-lucide="briefcase"></i>
+                    </div>
+                    <div class="stat-value">50K+</div>
+                    <div class="stat-label">Job Openings</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon emerald">
+                        <i data-lucide="building-2"></i>
+                    </div>
+                    <div class="stat-value">10K+</div>
+                    <div class="stat-label">Companies Hiring</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon orange">
+                        <i data-lucide="award"></i>
+                    </div>
+                    <div class="stat-value">95%</div>
+                    <div class="stat-label">Success Rate</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Jobs Section -->
+    <section class="featured-jobs" id="jobs">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">Featured Job Opportunities</h2>
+                <p class="section-description">
+                    Discover hand-picked positions from top companies looking for talented professionals like you.
+                </p>
+            </div>
+            
+            <div class="jobs-grid">
+                <!-- Job Card 1 -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <div class="job-info">
+                            <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=64&h=64&fit=crop&crop=face" alt="TechCorp logo" class="job-logo">
+                            <div>
+                                <div class="job-title">Senior Software Engineer</div>
+                                <div class="job-company">TechCorp</div>
+                            </div>
+                        </div>
+                        <button class="bookmark-btn">
+                            <i data-lucide="bookmark"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="job-details">
+                        <div class="job-detail">
+                            <i data-lucide="map-pin"></i>
+                            <span>San Francisco, CA</span>
+                            <span>•</span>
+                            <span>Full-time</span>
+                        </div>
+                        <div class="job-detail salary">
+                            <i data-lucide="dollar-sign"></i>
+                            <span>$120k - $180k</span>
+                        </div>
+                        <div class="job-detail">
+                            <i data-lucide="clock"></i>
+                            <span>2 days ago</span>
+                        </div>
+                    </div>
+                    
+                    <div class="job-tags">
+                        <span class="job-tag">React</span>
+                        <span class="job-tag">TypeScript</span>
+                        <span class="job-tag">Node.js</span>
+                    </div>
+                    
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+
+                <!-- Job Card 2 -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <div class="job-info">
+                            <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=64&h=64&fit=crop&crop=face" alt="InnovateLab logo" class="job-logo">
+                            <div>
+                                <div class="job-title">Product Manager</div>
+                                <div class="job-company">InnovateLab</div>
+                            </div>
+                        </div>
+                        <button class="bookmark-btn">
+                            <i data-lucide="bookmark"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="job-details">
+                        <div class="job-detail">
+                            <i data-lucide="map-pin"></i>
+                            <span>Remote</span>
+                            <span>•</span>
+                            <span>Full-time</span>
+                        </div>
+                        <div class="job-detail salary">
+                            <i data-lucide="dollar-sign"></i>
+                            <span>$100k - $150k</span>
+                        </div>
+                        <div class="job-detail">
+                            <i data-lucide="clock"></i>
+                            <span>1 day ago</span>
+                        </div>
+                    </div>
+                    
+                    <div class="job-tags">
+                        <span class="job-tag">Strategy</span>
+                        <span class="job-tag">Analytics</span>
+                        <span class="job-tag">Agile</span>
+                    </div>
+                    
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+
+                <!-- Job Card 3 -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <div class="job-info">
+                            <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=64&h=64&fit=crop&crop=face" alt="DesignStudio logo" class="job-logo">
+                            <div>
+                                <div class="job-title">UX Designer</div>
+                                <div class="job-company">DesignStudio</div>
+                            </div>
+                        </div>
+                        <button class="bookmark-btn">
+                            <i data-lucide="bookmark"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="job-details">
+                        <div class="job-detail">
+                            <i data-lucide="map-pin"></i>
+                            <span>New York, NY</span>
+                            <span>•</span>
+                            <span>Contract</span>
+                        </div>
+                        <div class="job-detail salary">
+                            <i data-lucide="dollar-sign"></i>
+                            <span>$80k - $120k</span>
+                        </div>
+                        <div class="job-detail">
+                            <i data-lucide="clock"></i>
+                            <span>3 days ago</span>
+                        </div>
+                    </div>
+                    
+                    <div class="job-tags">
+                        <span class="job-tag">Figma</span>
+                        <span class="job-tag">User Research</span>
+                        <span class="job-tag">Prototyping</span>
+                    </div>
+                    
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+
+                <!-- Job Card 4 -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <div class="job-info">
+                            <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=64&h=64&fit=crop&crop=face" alt="DataFlow logo" class="job-logo">
+                            <div>
+                                <div class="job-title">Data Scientist</div>
+                                <div class="job-company">DataFlow</div>
+                            </div>
+                        </div>
+                        <button class="bookmark-btn">
+                            <i data-lucide="bookmark"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="job-details">
+                        <div class="job-detail">
+                            <i data-lucide="map-pin"></i>
+                            <span>Austin, TX</span>
+                            <span>•</span>
+                            <span>Full-time</span>
+                        </div>
+                        <div class="job-detail salary">
+                            <i data-lucide="dollar-sign"></i>
+                            <span>$110k - $160k</span>
+                        </div>
+                        <div class="job-detail">
+                            <i data-lucide="clock"></i>
+                            <span>1 week ago</span>
+                        </div>
+                    </div>
+                    
+                    <div class="job-tags">
+                        <span class="job-tag">Python</span>
+                        <span class="job-tag">Machine Learning</span>
+                        <span class="job-tag">SQL</span>
+                    </div>
+                    
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+
+                <!-- Job Card 5 -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <div class="job-info">
+                            <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=64&h=64&fit=crop&crop=face" alt="CloudTech logo" class="job-logo">
+                            <div>
+                                <div class="job-title">DevOps Engineer</div>
+                                <div class="job-company">CloudTech</div>
+                            </div>
+                        </div>
+                        <button class="bookmark-btn">
+                            <i data-lucide="bookmark"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="job-details">
+                        <div class="job-detail">
+                            <i data-lucide="map-pin"></i>
+                            <span>Remote</span>
+                            <span>•</span>
+                            <span>Full-time</span>
+                        </div>
+                        <div class="job-detail salary">
+                            <i data-lucide="dollar-sign"></i>
+                            <span>$95k - $140k</span>
+                        </div>
+                        <div class="job-detail">
+                            <i data-lucide="clock"></i>
+                            <span>4 days ago</span>
+                        </div>
+                    </div>
+                    
+                    <div class="job-tags">
+                        <span class="job-tag">AWS</span>
+                        <span class="job-tag">Docker</span>
+                        <span class="job-tag">Kubernetes</span>
+                    </div>
+                    
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+
+                <!-- Job Card 6 -->
+                <div class="job-card">
+                    <div class="job-header">
+                        <div class="job-info">
+                            <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=64&h=64&fit=crop&crop=face" alt="GrowthCo logo" class="job-logo">
+                            <div>
+                                <div class="job-title">Marketing Manager</div>
+                                <div class="job-company">GrowthCo</div>
+                            </div>
+                        </div>
+                        <button class="bookmark-btn">
+                            <i data-lucide="bookmark"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="job-details">
+                        <div class="job-detail">
+                            <i data-lucide="map-pin"></i>
+                            <span>Chicago, IL</span>
+                            <span>•</span>
+                            <span>Full-time</span>
+                        </div>
+                        <div class="job-detail salary">
+                            <i data-lucide="dollar-sign"></i>
+                            <span>$75k - $110k</span>
+                        </div>
+                        <div class="job-detail">
+                            <i data-lucide="clock"></i>
+                            <span>5 days ago</span>
+                        </div>
+                    </div>
+                    
+                    <div class="job-tags">
+                        <span class="job-tag">Digital Marketing</span>
+                        <span class="job-tag">SEO</span>
+                        <span class="job-tag">Analytics</span>
+                    </div>
+                    
+                    <button class="apply-btn">Apply Now</button>
+                </div>
+            </div>
+            
+            <div class="section-footer">
+                <a href="#all-jobs" class="view-all-btn">View All Jobs</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Job Categories Section -->
+    <section class="job-categories">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">Browse Jobs by Category</h2>
+      <p class="section-description">
+        Explore opportunities across different industries and find the perfect match for your skills.
+      </p>
+    </div>
+
+    <div class="categories-grid">
+      <div class="category-card">
+        <div class="category-icon" style="background: linear-gradient(to right, #3b82f6, #2563eb);">
+          <i data-lucide="code"></i>
+        </div>
+        <div class="category-title">Technology</div>
+        <div class="category-count">12,450 jobs available</div>
+      </div>
+
+      <div class="category-card">
+        <div class="category-icon" style="background: linear-gradient(to right, #8b5cf6, #7c3aed);">
+          <i data-lucide="palette"></i>
+        </div>
+        <div class="category-title">Design & Creative</div>
+        <div class="category-count">3,240 jobs available</div>
+      </div>
+
+      <div class="category-card">
+        <div class="category-icon" style="background: linear-gradient(to right, #10b981, #059669);">
+          <i data-lucide="trending-up"></i>
+        </div>
+        <div class="category-title">Marketing & Sales</div>
+        <div class="category-count">8,670 jobs available</div>
+      </div>
+
+      <div class="category-card">
+        <div class="category-icon" style="background: linear-gradient(to right, #f97316, #ea580c);">
+          <i data-lucide="shield"></i>
+        </div>
+        <div class="category-title">Finance & Legal</div>
+        <div class="category-count">4,320 jobs available</div>
+      </div>
+
+      <div class="category-card">
+        <div class="category-icon" style="background: linear-gradient(to right, #ef4444, #dc2626);">
+          <i data-lucide="stethoscope"></i>
+        </div>
+        <div class="category-title">Healthcare</div>
+        <div class="category-count">6,890 jobs available</div>
+      </div>
+
+      <div class="category-card">
+        <div class="category-icon" style="background: linear-gradient(to right, #6366f1, #4f46e5);">
+          <i data-lucide="graduation-cap"></i>
+        </div>
+        <div class="category-title">Education</div>
+        <div class="category-count">2,150 jobs available</div>
+      </div>
+
+      <div class="category-card">
+        <div class="category-icon" style="background: linear-gradient(to right, #eab308, #ca8a04);">
+          <i data-lucide="wrench"></i>
+        </div>
+        <div class="category-title">Engineering</div>
+        <div class="category-count">5,780 jobs available</div>
+      </div>
+
+      <div class="category-card">
+        <div class="category-icon" style="background: linear-gradient(to right, #ec4899, #db2777);">
+          <i data-lucide="users"></i>
+        </div>
+        <div class="category-title">Human Resources</div>
+        <div class="category-count">1,960 jobs available</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+    <!-- How It Works Section -->
+    <div class="container">
+    <div class="section-header">
+      <h2 class="section-title">How JobRinger Works</h2>
+      <p class="section-description">
+        Our streamlined process makes job searching simple and effective. Get started in minutes.
+      </p>
+    </div>
+
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-icon-container">
+          <div class="step-icon blue">
+            <i data-lucide="user-plus"></i>
+          </div>
+          <div class="step-number">1</div>
+        </div>
+        <div class="step-title">Create Your Profile</div>
+        <div class="step-description">
+          Sign up and build a compelling profile that showcases your skills, experience, and career goals.
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-icon-container">
+          <div class="step-icon purple">
+            <i data-lucide="search"></i>
+          </div>
+          <div class="step-number">2</div>
+        </div>
+        <div class="step-title">Search & Discover</div>
+        <div class="step-description">
+          Browse thousands of job opportunities or let our smart matching algorithm find the perfect roles for you.
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-icon-container">
+          <div class="step-icon emerald">
+            <i data-lucide="send"></i>
+          </div>
+          <div class="step-number">3</div>
+        </div>
+        <div class="step-title">Apply with Ease</div>
+        <div class="step-description">
+          Submit your applications with just one click using your saved profile and customized cover letters.
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-icon-container">
+          <div class="step-icon orange">
+            <i data-lucide="check-circle"></i>
+          </div>
+          <div class="step-number">4</div>
+        </div>
+        <div class="step-title">Get Hired</div>
+        <div class="step-description">
+          Connect with employers, schedule interviews, and land your dream job with our comprehensive support.
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-section">
+      <a href="#signup" class="cta-btn">Get Started Now</a>
+    </div>
+  </div>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">What Our Users Say</h2>
+                <p class="section-description">
+                    Join thousands of professionals who have successfully advanced their careers with JobRinger.
+                </p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <i data-lucide="quote" class="quote-icon"></i>
+                    
+                    <div class="rating">
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                    </div>
+                    
+                    <div class="testimonial-content">
+                        "JobRinger helped me find my dream job in just 2 weeks! The platform's matching algorithm is incredibly accurate, and the application process was seamless."
+                    </div>
+                    
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" alt="Emily Rodriguez" class="author-avatar">
+                        <div>
+                            <div class="author-name">Sarah Johnson</div>
+                            <div class="author-role">Software Engineer at TechCorp</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <i data-lucide="quote" class="quote-icon"></i>
+                    
+                    <div class="rating">
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                    </div>
+                    
+                    <div class="testimonial-content">
+                        "As someone who was hesitant about job searching online, JobRinger exceeded all my expectations. The quality of opportunities was outstanding."
+                    </div>
+                    
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=80&h=80&fit=crop&crop=face" alt="Michael Chen" class="author-avatar">
+                        <div>
+                            <div class="author-name">Michael Chen</div>
+                            <div class="author-role">Product Manager at InnovateLab</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <i data-lucide="quote" class="quote-icon"></i>
+                    
+                    <div class="rating">
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                        <i data-lucide="star" class="star"></i>
+                    </div>
+                    
+                    <div class="testimonial-content">
+                        "The personalized job recommendations saved me countless hours of searching. I landed multiple interviews within the first month of using the platform."
+                    </div>
+                    
+                    <div class="testimonial-author">
+                        <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=80&h=80&fit=crop&crop=face" alt="Emily Rodriguez" class="author-avatar">
+                        <div>
+                            <div class="author-name">Emily Rodriguez</div>
+                            <div class="author-role">UX Designer at DesignStudio</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">JobRinger</div>
+                    <div class="footer-description">
+                        Connecting talented professionals with amazing opportunities. Your dream job is just a click away.
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <i data-lucide="facebook"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i data-lucide="twitter"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i data-lucide="linkedin"></i>
+                        </a>
+                        <a href="#" class="social-link">
+                            <i data-lucide="instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>For Job Seekers</h4>
+                    <ul class="footer-links">
+                        <li><a href="#jobs">Browse Jobs</a></li>
+                        <li><a href="#advice">Career Advice</a></li>
+                        <li><a href="#resume">Resume Builder</a></li>
+                        <li><a href="#salary">Salary Guide</a></li>
+                        <li><a href="#tips">Interview Tips</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>For Employers</h4>
+                    <ul class="footer-links">
+                        <li><a href="#post-job">Post a Job</a></li>
+                        <li><a href="#resumes">Browse Resumes</a></li>
+                        <li><a href="#recruiting">Recruiting Solutions</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#success">Success Stories</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <div class="contact-item">
+                        <i data-lucide="map-pin"></i>
+                        <span>123 Business Ave, Suite 100<br>San Francisco, CA 94105</span>
+                    </div>
+                    <div class="contact-item">
+                        <i data-lucide="phone"></i>
+                        <span>+1 (555) 123-4567</span>
+                    </div>
+                    <div class="contact-item">
+                        <i data-lucide="mail"></i>
+                        <span>hello@jobringer.com</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="copyright">
+                    © 2024 JobRinger. All rights reserved.
+                </div>
+                <div class="footer-bottom-links">
+                    <a href="#privacy">Privacy Policy</a>
+                    <a href="#terms">Terms of Service</a>
+                    <a href="#cookies">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIcon = document.getElementById('menu-icon');
+            const closeIcon = document.getElementById('close-icon');
+            
+            mobileMenu.classList.toggle('active');
+            menuIcon.classList.toggle('hidden');
+            closeIcon.classList.toggle('hidden');
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Search form submission
+        document.querySelector('.search-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const jobInput = this.querySelector('input[placeholder*="Job title"]');
+            const locationInput = this.querySelector('input[placeholder*="City"]');
+            
+            if (jobInput.value.trim() || locationInput.value.trim()) {
+                alert(`Searching for "${jobInput.value}" in "${locationInput.value}"`);
+                // Here you would typically redirect to a search results page
+            } else {
+                alert('Please enter a job title or location to search.');
+            }
+        });
+
+        // Apply button clicks
+        document.querySelectorAll('.apply-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const jobCard = this.closest('.job-card');
+                const jobTitle = jobCard.querySelector('.job-title').textContent;
+                const company = jobCard.querySelector('.job-company').textContent;
+                
+                alert(`Applying for ${jobTitle} at ${company}!`);
+                // Here you would typically redirect to an application page
+            });
+        });
+
+        // Bookmark button clicks
+        document.querySelectorAll('.bookmark-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                icon.classList.toggle('text-blue-600');
+                
+                if (icon.classList.contains('text-blue-600')) {
+                    this.style.color = '#2563eb';
+                    alert('Job saved to bookmarks!');
+                } else {
+                    this.style.color = '#94a3b8';
+                    alert('Job removed from bookmarks!');
+                }
+            });
+        });
+
+        // Category card clicks
+        document.querySelectorAll('.category-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const category = this.querySelector('.category-title').textContent;
+                alert(`Browsing ${category} jobs...`);
+                // Here you would typically redirect to a category page
+            });
+        });
+
+        // Filter tag clicks
+        document.querySelectorAll('.filter-tag').forEach(tag => {
+            tag.addEventListener('click', function(e) {
+                e.preventDefault();
+                const searchTerm = this.textContent;
+                const jobInput = document.querySelector('input[placeholder*="Job title"]');
+                jobInput.value = searchTerm;
+                jobInput.focus();
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 10) {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+                header.style.backdropFilter = 'blur(10px)';
+            } else {
+                header.style.backgroundColor = 'white';
+                header.style.backdropFilter = 'none';
+            }
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate-fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards and sections
+        document.querySelectorAll('.job-card, .category-card, .step-card, .testimonial-card, .stat-item').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Header button click handlers
+        document.querySelector('.btn-secondary[href="#signin"]')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Sign In functionality would be implemented here.');
+        });
+
+        document.querySelector('.btn-primary[href="#signup"]')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Sign Up functionality would be implemented here.');
+        });
+
+        document.querySelector('.cta-btn')?.addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Get Started functionality would be implemented here.');
+        });
+
+        // Console log for demo purposes
+        console.log('JobRinger website loaded successfully!');
+        console.log('This is a demo version with simulated functionality.');
+    </script>
+</body>
+</html>
